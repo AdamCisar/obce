@@ -12,7 +12,7 @@ class City extends Model
         'coat_of_arms_url',
         'phone',
         'email',
-        'web',
+        'web_address',
         'mayor_name',
         'latitude',
         'longitude',
