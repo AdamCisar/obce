@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    // return view('welcome');\
+Route::controller(CityController::class)
+    ->name('cities.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('city/{city}', 'show')->name('show');
 });
