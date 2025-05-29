@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('coat_of_arms_url')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('web')->nullable();
+            $table->string('web_address')->nullable();
             $table->string('mayor_name')->nullable();
             $table->decimal('latitude')->nullable();
             $table->decimal('longitude')->nullable();
