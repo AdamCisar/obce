@@ -1,0 +1,122 @@
+$primary-color: #007bff;
+$gray: #f4f4f4;
+$dark: #333;
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: white;
+    color: $dark;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.header {
+    background: white;
+    border-bottom: 1px solid #ddd;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+    }
+
+    .nav ul {
+        list-style: none;
+        display: flex;
+        gap: 1rem;
+
+        li a {
+            text-decoration: none;
+            color: $dark;
+        }
+    }
+
+    .header__right {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        .btn {
+            background: $primary-color;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .search-form {
+            display: flex;
+            input {
+                padding: 0.4rem;
+            }
+        }
+    }
+}
+
+.search {
+    background: linear-gradient(to bottom, #007bff, #00c0ff);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+
+    &__form {
+        margin-top: 1.5rem;
+        display: inline-flex;
+
+        input {
+            padding: 0.75rem;
+            width: 300px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+        button {
+            padding: 0.75rem;
+            background: white;
+            color: $primary-color;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+    }
+}
+
+.footer {
+    background: $gray;
+    padding: 2rem 0;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+
+    &__column {
+        h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .alert {
+            margin-top: 1rem;
+            a {
+                color: $primary-color;
+            }
+        }
+    }
+}
