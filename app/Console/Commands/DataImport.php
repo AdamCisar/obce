@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Imports\NitraCityImporter;
 use Illuminate\Console\Command;
 
 class DataImport extends Command

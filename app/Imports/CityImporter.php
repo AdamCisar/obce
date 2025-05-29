@@ -5,10 +5,9 @@ namespace App\Imports;
 
 use App\Contracts\ImportContract;
 use App\Exceptions\ImportFailedException;
-use Dom\HTMLDocument;
 use Symfony\Component\DomCrawler\Crawler;
 
-class NitraCityImporter implements ImportContract {
+class CityImporter implements ImportContract {
 
     private const URL = 'https://www.e-obce.sk/kraj/NR.html';
 
@@ -23,10 +22,16 @@ class NitraCityImporter implements ImportContract {
 
     private function prepare(): bool
     {
+        $starTime = microtime(true);
         $districtLinks = $this->getDistrictLinks(self::URL);
         $cityLinks = $this->getCitiesLinks($districtLinks);
         $cityData = $this->getCitiesData($cityLinks);
 
+        $endTime = microtime(true);
+        $executionTime = $endTime - $starTime;
+        dd($executionTime);
+
+        dd($cityData[0]);
         return true;
     }
 
@@ -72,13 +77,9 @@ class NitraCityImporter implements ImportContract {
 
             $data[] = [
                 'name' => $city['name'],
-                'mayor_name' => $this->getValueFromTable('Starosta', $dom),
                 'city_hall_address' => trim($dom->filterXPath("//td[a[starts-with(@href, 'mailto:')]]/preceding-sibling::td[2]")->text()),
-                'phone' => $this->getValueFromTable('Tel', $dom),
-                'fax' => $this->getValueFromTable('Fax', $dom),
-                'email' => $this->getValueFromTable('Email', $dom),
-                'web_address' => $this->getValueFromTable('Web', $dom),
                 'coat_of_arms_url' => $dom->filterXPath("//td/img[contains(@src, '/erb/')]")->attr('src'),
+                ...$this->getContactInfo($dom),
             ];
         }
 
@@ -106,12 +107,34 @@ class NitraCityImporter implements ImportContract {
         return trim($node->attr(attribute: 'href'));
     }
 
-    public function getValueFromTable(string $key, Crawler $dom): string
+    public function getContactInfo(Crawler $dom): array
     {
-        try {
-            return trim($dom->filterXPath("//tr/td[.//text()[contains(normalize-space(), '$key')]]/following-sibling::td[1]")->text());
-        } catch (\Exception $e) {
-            return ''; 
+        $contactInfo = [
+            'Starosta:' => 'mayor_name',
+            'Tel:' => 'phone',
+            'Fax:' => 'fax',
+            'Email:' => 'email',
+            'Web:' => 'web_address',
+        ];
+
+        $fields = array_keys($contactInfo);
+
+        $info = [];
+
+        $nodes = $dom->filterXPath("//tr/td[
+            contains(normalize-space(), '".implode("') or contains(normalize-space(), '", $fields)."')
+        ]");
+
+        foreach ($nodes as $node) {
+            if (!in_array(trim($node->nodeValue), $fields)) {
+                continue;
+            }
+
+            $crawler = new Crawler($node);
+
+            $info[trim($node->nodeValue)] = trim($crawler->nextAll()->text());
         }
+
+        return $info;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-use App\Imports\NitraCityImporter;
+use App\Imports\CityImporter;
 
 return [
-    'NitraCities' => NitraCityImporter::class,
+    'cities' => CityImporter::class,
 ];
