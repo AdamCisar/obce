@@ -113,6 +113,7 @@ class CityImporter implements ImportContract {
     {
         $contactInfo = [
             'Starosta:' => 'mayor_name',
+            'Primátor:' => 'mayor_name',
             'Tel:' => 'phone',
             'Fax:' => 'fax',
             'Email:' => 'email',
@@ -128,15 +129,21 @@ class CityImporter implements ImportContract {
         ]");
 
         foreach ($nodes as $node) {
-            $value = trim($node->nodeValue);
+            $key = trim($node->nodeValue);
             
-            if (!in_array($value, $fields)) {
+            if (!in_array($key, $fields)) {
                 continue;
             }
 
             $crawler = new Crawler($node);
 
-            $info[$contactInfo[$value]] = trim($crawler->nextAll()->text());
+            $value = trim($crawler->nextAll()->text());
+
+            if ($key === 'Email:') {
+                $value = str_replace(' ', ';', $value);
+            }
+
+            $info[$contactInfo[$key]] = $value;
         }
 
         return $info;
