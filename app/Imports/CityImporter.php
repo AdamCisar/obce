@@ -6,7 +6,7 @@ namespace App\Imports;
 use App\Contracts\ImportContract;
 use App\Exceptions\ImportFailedException;
 use App\Models\City;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -16,7 +16,7 @@ class CityImporter implements ImportContract {
 
     private array $cityData = [];
 
-    public function __construct(private readonly City $cityModel) {}
+    public function __construct(private readonly City $cityModel, private readonly FilesystemManager $storage) {}
 
     public function import(): void 
     {
@@ -42,9 +42,9 @@ class CityImporter implements ImportContract {
         $filename = 'coat_of_arms_' . Str::slug($data['name']) . '.' . pathinfo($data['coat_of_arms_url'], PATHINFO_EXTENSION);
 
         $relativePath = 'coat_of_arms/' . $filename;
-        Storage::disk('public')->put($relativePath, $imageContents);
+        $this->storage->disk('public')->put($relativePath, $imageContents);
 
-        return Storage::url($relativePath);
+        return $this->storage->url($relativePath);
     }
 
     private function prepare(): void
