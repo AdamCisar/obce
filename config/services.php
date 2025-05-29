@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    
+    'locationiq' => [
+        'api_key' => env('LOCATION_IQ_API_KEY'),
+    ],
 ];

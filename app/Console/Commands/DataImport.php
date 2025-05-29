@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Contracts\ImportContract;
 
 class DataImport extends Command
 {
@@ -11,7 +12,7 @@ class DataImport extends Command
      *
      * @var string
      */
-    protected $signature = 'data:import {importer}';
+    protected $signature = 'data:import {importer} {--config=}';
 
     /**
      * The console command description.
@@ -29,10 +30,15 @@ class DataImport extends Command
         $importers = config('importer');
 
         try {
-            $importer = app($importers[$importerName] ?? '');
+            $importer = app($importers[$importerName] ?? '', ['config' => config($this->option('config'))]);
         } catch (\Exception $e) {
              $this->error("Importer '{$importerName}' is not configured. Please configure it in config/importer.php");
              return;
+        }
+
+        if (!$importer instanceof ImportContract) {
+            $this->error("Importer must implement ". ImportContract::class);
+            return;
         }
 
         try {
