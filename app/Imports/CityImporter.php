@@ -5,41 +5,64 @@ namespace App\Imports;
 
 use App\Contracts\ImportContract;
 use App\Exceptions\ImportFailedException;
+use App\Models\City;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CityImporter implements ImportContract {
 
-    private const URL = 'https://www.e-obce.sk/kraj/NR.html';
+    private const array URL = ['https://www.e-obce.sk/kraj/NR.html'];
 
-    public function import(): bool 
+    private array $cityData = [];
+
+    public function __construct(private readonly City $cityModel) {}
+
+    public function import(): void 
     {
-        if (!$this->prepare()) {
-            throw new ImportFailedException('Import preparation failed');
-        }
-
-        return true;
+        $this->prepare();
+        $this->process();
     }
 
-    private function prepare(): bool
+    private function process(): void
     {
-        $starTime = microtime(true);
-        $districtLinks = $this->getDistrictLinks(self::URL);
-        $cityLinks = $this->getCitiesLinks($districtLinks);
-        $cityData = $this->getCitiesData($cityLinks);
+        foreach ($this->cityData as $city) {
+            $city['coat_of_arms_url'] = $this->saveImageToPublicDirectory($city);
+            $this->cityModel->updateOrCreate(['name' => $city['name']], $city);
+        }
+    }
 
-        $endTime = microtime(true);
-        $executionTime = $endTime - $starTime;
-        dd($executionTime);
+    private function saveImageToPublicDirectory(array $data): string 
+    {
+        if (empty($data['coat_of_arms_url'])) {
+            return '';
+        }
 
-        dd($cityData[0]);
-        return true;
+        $imageContents = file_get_contents($data['coat_of_arms_url']);
+        $filename = 'coat_of_arms_' . Str::slug($data['name']) . '.' . pathinfo($data['coat_of_arms_url'], PATHINFO_EXTENSION);
+
+        $relativePath = 'coat_of_arms/' . $filename;
+        Storage::disk('public')->put($relativePath, $imageContents);
+
+        return Storage::url($relativePath);
+    }
+
+    private function prepare(): void
+    {
+        foreach (self::URL as $url) {
+            $districtLinks = $this->getDistrictLinks($url);
+            $cityLinks = $this->getCitiesLinks($districtLinks);
+            $cityData = $this->getCitiesData($cityLinks);
+        }
+
+        $this->cityData = $cityData;
     }
 
     private function getDistrictLinks(string $url): array 
     {
         $links = [];
 
-        $html = $this->fetchHtml(self::URL);
+        $html = $this->fetchHtml($url);
         $links = $this->getCrawler($html)
             ->filterXPath("//td[contains(text(), 'OKRES:')]//a[contains(@href, 'okres')]")
             ->each($this->trimHref(...));
@@ -86,27 +109,6 @@ class CityImporter implements ImportContract {
         return $data;
     }
 
-    private function fetchHtml(string $url): string 
-    {
-        $html = file_get_contents($url);
-
-        if (empty($html)) {
-            throw new ImportFailedException('Failed to fetch HTML');
-        }
-
-        return mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
-    }
-
-    private function getCrawler(string $html): Crawler 
-    {
-        return new Crawler($html);
-    }
-
-    private function trimHref(Crawler $node): string 
-    {
-        return trim($node->attr(attribute: 'href'));
-    }
-
     public function getContactInfo(Crawler $dom): array
     {
         $contactInfo = [
@@ -126,15 +128,38 @@ class CityImporter implements ImportContract {
         ]");
 
         foreach ($nodes as $node) {
-            if (!in_array(trim($node->nodeValue), $fields)) {
+            $value = trim($node->nodeValue);
+            
+            if (!in_array($value, $fields)) {
                 continue;
             }
 
             $crawler = new Crawler($node);
 
-            $info[trim($node->nodeValue)] = trim($crawler->nextAll()->text());
+            $info[$contactInfo[$value]] = trim($crawler->nextAll()->text());
         }
 
         return $info;
+    }
+
+    private function fetchHtml(string $url): string 
+    {
+        $html = file_get_contents($url);
+
+        if (empty($html)) {
+            throw new ImportFailedException('Failed to fetch HTML');
+        }
+
+        return mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+    }
+
+    private function getCrawler(string $html): Crawler 
+    {
+        return new Crawler($html);
+    }
+
+    private function trimHref(Crawler $node): string 
+    {
+        return trim($node->attr(attribute: 'href'));
     }
 }
