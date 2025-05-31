@@ -1,7 +1,9 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'variables';
 @import 'styles';
-@import 'footer';
+@import 'layout/footer';
+@import 'layout/header';
+@import 'layout/navigation';
 
 * {
   margin: 0;
@@ -18,6 +20,27 @@ html {
 
 body {
   font-family: system-ui, sans-serif;
-  background-color: #fff;
+  background-color: $white;
   color: #111;
+}
+
+.container {
+  max-width: 1400px;
+}
+
+.form-select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(0.9em + 2px),
+    calc(100% - 15px) calc(0.9em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    0px 1.5em;
+  background-repeat: no-repeat;
+    color: $light-gray;
 }

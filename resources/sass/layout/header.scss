@@ -1,0 +1,37 @@
+.header {
+    margin-top: 1.5rem;
+
+    &__container {
+        margin-bottom: 1.5rem;
+    }
+
+    &__link {
+        color: $light-blue;
+    }
+
+    &__login {
+        background-color: $cyan;
+        color: $white;
+
+        &-text {
+            padding: 0.7rem;
+        }
+
+    }
+
+    &__search {
+
+        &-icon {
+            right: 15px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            pointer-events: none; 
+            color: $light-gray;
+        }
+    }
+
+    &__language {
+        width: 4.1rem;
+    }
+
+}
