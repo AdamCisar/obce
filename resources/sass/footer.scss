@@ -1,0 +1,51 @@
+.footer {
+    color: map-get($footer-colors, text);
+    background-color: map-get($footer-colors, background);
+
+    h5 {
+        font-size: 16px;
+        font-weight: 650;
+    }
+
+    &__heading {
+
+        &--alert {
+            color: map-get($footer-colors, alert);
+        }
+    }
+    
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto auto auto;
+        gap: 2rem;
+    }
+
+    &__column {
+
+        margin-top: 2rem;
+
+        &--long {
+            grid-row: span 3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 0.1rem;
+            }
+        }
+    }
+    
+    &__section {
+        
+        margin-bottom: 2rem;
+
+        &--alert {
+            margin-top: 3rem;
+        }
+    }
+
+}

@@ -4,13 +4,16 @@ return [
     // Footer - Address
     'address_and_contact' => 'ADRESA A KONTAKT',
     'institute' => 'ŠÚKL',
-    'address' => 'Kvetná 11, 825 08 Bratislava 26',
+    'street' => 'Kvetná 11',
+    'zip' => '825 08',
+    'address' => 'Bratislava 26',
     'headquarters' => 'Ústredňa',
     'phone' => '+421-2-50701 111',
 
     // Footer - Contact
     'contacts' => 'KONTAKTY',
     'phone_numbers' => 'telefónne čísla',
+    'contact_address' => 'adresa',
     'office_hours' => 'úradné hodiny',
     'bank_connection' => 'bankové spustenie',
 
@@ -32,8 +35,8 @@ return [
     'legal_department' => 'Právne orgány',
     'legislation' => 'Legislatíva',
     'offences' => 'Priestupky a iné správne delikty',
-    'list_of_employees' => 'Zoznam úradníkov',
-    'sadzobník' => 'Sadzobník ŠÚKL',
+    'list_of_debtors' => 'Zoznam dlžníkov',
+    'tariff' => 'Sadzobník ŠÚKL',
     'public_procurements' => 'Verejné obstarávanie',
     'training_and_presentations' => 'Vzdelávacie akcie a prezentácie',
     'consultations' => 'Konzultácie',
@@ -63,6 +66,7 @@ return [
     'drug_precursors' => 'DROGOVÉ PREKURZORY',
     'news' => 'Aktuality',
     'guidelines' => 'Pokyny',
+    'contact' => 'Kontakt',
 
     // Footer - Other
     'other' => 'INÉ',

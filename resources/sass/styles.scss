@@ -88,35 +88,3 @@ body {
     }
 }
 
-.footer {
-    background: $gray;
-    padding: 2rem 0;
-
-    &__grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 2rem;
-    }
-
-    &__column {
-        h4 {
-            margin-bottom: 0.5rem;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-
-            li {
-                margin-bottom: 0.5rem;
-            }
-        }
-
-        .alert {
-            margin-top: 1rem;
-            a {
-                color: $primary-color;
-            }
-        }
-    }
-}
