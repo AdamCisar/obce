@@ -1,9 +1,8 @@
 @import 'bootstrap/scss/bootstrap';
-@import 'variables';
 @import 'styles';
-@import 'layout/footer';
-@import 'layout/header';
-@import 'layout/navigation';
+@import 'layouts/footer';
+@import 'layouts/header';
+@import 'layouts/navigation';
 
 * {
   margin: 0;
@@ -28,7 +27,7 @@ body {
   max-width: 1400px;
 }
 
-.form-select {
+.form-select-custom {
   background-image:
     linear-gradient(45deg, transparent 50%, gray 50%),
     linear-gradient(135deg, gray 50%, transparent 50%),

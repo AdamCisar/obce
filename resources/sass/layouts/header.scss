@@ -1,12 +1,17 @@
 .header {
     margin-top: 1.5rem;
 
+    .container {
+        margin-bottom: 1.0rem;
+    }
+
     &__container {
         margin-bottom: 1.5rem;
     }
 
     &__link {
         color: $light-blue;
+        font-weight: 600;
     }
 
     &__login {

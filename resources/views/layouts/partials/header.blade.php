@@ -7,10 +7,10 @@
       </div>
 
       <div class="header__right d-flex align-items-center">
-        <a href="#" class="header__link me-3 fw-bold text-decoration-none">{{ __('layout/header.contacts_and_numbers') }}</a>
+        <a href="#" class="header__link me-3 text-decoration-none">{{ __('layouts/header.contacts_and_numbers') }}</a>
 
         <div class="header__language me-2">
-          <select class="form-select language-switcher me-3 border-0">
+          <select class="form-select form-select-custom language-switcher me-3 border-0">
             <option value="sk">SK</option>
             <option value="en">EN</option>
           </select>
@@ -24,7 +24,7 @@
 
 
         <a href="#" class="header__login btn">
-          <span class="header__login-text">{{ __('layout/header.login') }}</span>
+          <span class="header__login-text">{{ __('layouts/header.login') }}</span>
         </a>
       </div>
 

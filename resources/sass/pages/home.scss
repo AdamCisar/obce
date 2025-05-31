@@ -1,0 +1,52 @@
+.search {
+    background: linear-gradient(to bottom, #007bff, #00c0ff);
+    color: $white;
+    padding: 4rem 0;
+    text-align: center;
+    min-height: 40vh;
+
+    &__title {
+        font-size: 3.5rem;
+        font-weight: 300;
+        margin-bottom: 1.5rem;
+    }
+
+    &__bar {
+        box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.15);
+        width: 35%;
+        margin: 0 auto;
+        height: 3rem;
+
+        input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            padding: 0 1rem;
+            border-radius: 6px;
+        }
+    }
+
+
+    &__form {
+        margin-top: 1.5rem;
+        display: inline-flex;
+
+        input {
+            padding: 0.75rem;
+            width: 300px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+        button {
+            padding: 0.75rem;
+            background: $white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+    }
+}
+
