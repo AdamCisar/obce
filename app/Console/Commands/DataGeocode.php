@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Sleep;
 
 class DataGeocode extends Command
 {
@@ -31,6 +32,5 @@ class DataGeocode extends Command
             'importer' => 'geocode',
             '--config' => 'services.locationiq'
         ]);
-
     }
 }

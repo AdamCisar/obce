@@ -8,6 +8,7 @@ use App\Exceptions\ImportFailedException;
 use App\Models\City;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Sleep;
 
 readonly class GeocodeImporter implements ImportContract {
 
@@ -57,7 +58,7 @@ readonly class GeocodeImporter implements ImportContract {
             $data = json_decode($response->getBody()->getContents(), true);
             
             // to avoid rate limits
-            sleep(1);
+            Sleep::for(1)->seconds();
 
         } catch (\Exception $e) {
             throw new ImportFailedException($e->getMessage());

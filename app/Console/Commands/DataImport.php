@@ -30,9 +30,13 @@ class DataImport extends Command
         $importers = config('importer');
 
         try {
-            $importer = app($importers[$importerName] ?? '', ['config' => config($this->option('config'))]);
+            $importer = app(
+                $importers[$importerName] ?? '', 
+                ['config' => config($this->option('config'))]
+            );
         } catch (\Exception $e) {
-             $this->error("Importer '{$importerName}' is not configured. Please configure it in config/importer.php");
+             $this->error("If importer '{$importerName}' is not configured. Please configure it in config/importer.php");
+             $this->error($e->getMessage());
              return;
         }
 
