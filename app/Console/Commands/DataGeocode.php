@@ -30,7 +30,6 @@ class DataGeocode extends Command
 
         $this->call('data:import', [
             'importer' => 'geocode',
-            '--config' => 'services.locationiq'
         ]);
     }
 }
