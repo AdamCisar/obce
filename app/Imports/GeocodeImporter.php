@@ -5,9 +5,11 @@ namespace App\Imports;
 
 use App\Contracts\GeocoderContract;
 use App\Contracts\ImportContract;
+use App\Jobs\GeocodeCityJob;
 use App\Models\City;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Config\Repository as Config;
 
 readonly class GeocodeImporter implements ImportContract {
 
@@ -17,7 +19,8 @@ readonly class GeocodeImporter implements ImportContract {
         private City $cityModel, 
         private Client $client,
         private GeocoderContract $geocoder,
-        ) {}
+        private Config $config
+    ) {}
 
     public function import(): void 
     {
@@ -27,21 +30,44 @@ readonly class GeocodeImporter implements ImportContract {
     
     private function process(): void 
     {
-        $this->cities->each->save();
+        $this->cities->each($this->save(...));
     }
 
     private function prepare(): void
     {
         $this->loadData();
+        $isQueue = $this->config->get('import.use_queue');
 
         foreach ($this->cities as $city) {
-            [$city->latitude, $city->longitude] = $this->getLocation($city->city_hall_address . ', ' . $city->name);
+
+            if ($isQueue) {
+                $this->dispatch($city);
+                continue;
+            }
+
+            [$city->latitude, $city->longitude] = $this->getLocation($city);
         }
     }
 
-    private function getLocation(string $address): array 
+    public function dispatch(City $city): void 
     {
-        return $this->geocoder->geocode($address);
+        GeocodeCityJob::dispatch($city);
+    }
+
+    public function processDispatched(City $city): void
+    {
+        [$city->latitude, $city->longitude] = $this->getLocation($city);
+        $this->save($city);
+    }
+
+    public function getLocation(City $city): array 
+    {
+        return $this->geocoder->geocode($city->city_hall_address . ', ' . $city->name);
+    }
+
+    public function save(City $city): void 
+    {
+        $city->save();
     }
 
     private function loadData(): void

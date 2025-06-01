@@ -7,11 +7,11 @@ use App\Services\CitySearchService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
     public function __construct(private readonly CitySearchService $search) {}
+    
     public function index(): View
     {
         return view('pages.home');

@@ -27,15 +27,14 @@ class DataImport extends Command
     public function handle()
     {
         $importerName = $this->argument('importer');
-        $importers = config('importer');
 
         try {
             $importer = app(
-                $importers[$importerName] ?? '', 
+                $importerName, 
                 ['config' => config($this->option('config'))]
             );
         } catch (\Exception $e) {
-             $this->error("If importer '{$importerName}' is not configured. Please configure it in config/importer.php");
+             $this->error("If importer '{$importerName}' is not configured. Please configure it in ImporterServiceProvider.php");
              $this->error($e->getMessage());
              return;
         }

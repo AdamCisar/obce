@@ -34,7 +34,7 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-6 fw-bold">{{ __('pages/city_detail.geolocation') }}:</div>
-                    <div class="col-6">{{ $city->city_hall_address }}</div>
+                    <div class="col-6">{{ $city->latitude }}, {{ $city->longitude }}</div>
                 </div>
             </div>
 
