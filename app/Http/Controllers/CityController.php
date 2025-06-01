@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Services\CitySearchService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,10 +11,10 @@ use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
+    public function __construct(private readonly CitySearchService $search) {}
     public function index(): View
     {
-        $cities = City::all();
-        return view('pages.home', compact('cities'));
+        return view('pages.home');
     }
 
     public function show(City $city): View
@@ -28,12 +29,6 @@ class CityController extends Controller
             return response()->json([]);
         }
 
-       $cities = City::where('name', 'like', '%' . $q . '%')
-        ->get(['id', 'name'])
-        ->each(function ($city) {
-            $city->url = route('cities.show', ['city' => $city->id]);
-        });
-
-        return response()->json($cities);
+        return response()->json($this->search->search($q));
     }
 }
