@@ -10,14 +10,11 @@
   box-sizing: border-box;
 }
 
-html {
+html, body {
+  height:100%;
+  width:100%;
   font-size: 16px;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
   font-family: system-ui, sans-serif;
   background-color: $white;
   color: #111;
@@ -29,17 +26,21 @@ body {
 
 .form-select-custom {
   background-image:
-    linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
+    linear-gradient(45deg, transparent 50%, #999 50%),
+    linear-gradient(135deg, #999 50%, transparent 50%),
+    linear-gradient(to right, #bbb, #bbb);   
+
   background-position:
-    calc(100% - 20px) calc(0.9em + 2px),
-    calc(100% - 15px) calc(0.9em + 2px),
-    calc(100% - 2.5em) 0.5em;
+    calc(100% - 10px) center,
+    calc(100% - 5px) center,
+    calc(100% - 1.5em) center;
+
   background-size:
     5px 5px,
     5px 5px,
     0px 1.5em;
+
   background-repeat: no-repeat;
-    color: $light-gray;
+  padding-right: 0.3em;
+  color: $light-gray;
 }

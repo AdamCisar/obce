@@ -14,20 +14,7 @@
         }
     }
     
-    &__grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: auto auto auto;
-        gap: 5rem;
-    }
-
     &__column {
-
-        margin-top: 2rem;
-
-        &--long {
-            grid-row: span 3;
-        }
 
         ul {
             list-style: none;
