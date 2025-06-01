@@ -1,6 +1,6 @@
 <footer class="footer d-flex justify-content-center">
     <div class="container">
-        <div class="row footer__grid mt-5 gap-5">
+        <div class="row footer__grid mt-5 mb-3 gap-5">
             <div class="footer__column footer__column--group col">
                 <div class="footer__section mb-4">
                     <h5>{{ __('layouts/footer.address_and_contact') }}</h5>
