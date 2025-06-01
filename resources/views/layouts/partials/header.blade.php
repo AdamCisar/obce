@@ -3,7 +3,9 @@
     <div class="row header__container gx-5 align-items-center">
       
       <div class="header__logo col-12 col-md-3 mb-3 mb-md-0">
-        <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid">
+        <a href="/" class="header__logo-link">
+          <img src="{{ asset('storage/logo/logo.png') }}" alt="Logo" class="img-fluid">
+        </a>
       </div>
 
       <div class="header__right col-12 col-md-9 d-flex flex-column flex-md-row align-items-md-center justify-content-md-end gap-3">

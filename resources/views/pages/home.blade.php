@@ -1,17 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="container-fluid search d-flex flex-column justify-content-center align-items-center">
-  <div class="container text-center">
-    <h1 class="search__title">{{ __('pages/home.search_database_title') }}</h1>
-    <div class="search__bar mx-auto">
-      <input type="text" placeholder="{{ __('pages/home.enter_name') }}">
+
+  <section class="container-fluid search d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center">
+      <h1 class="search__title">{{ __('pages/home.search_database_title') }}</h1>
+      <div class="search__bar mx-auto" id="autocomplete"></div>
     </div>
-  </div>
-</section>
+  </section>
 
 @endsection
 
-@push('styles')
-    @vite(['resources/sass/pages/home.scss'])
+@push('viteEntries')
+  @vite(['resources/js/cities/autocomplete.js', 'resources/sass/pages/home.scss'])
 @endpush
+
+@php
+  $translations = [
+    'enter_title' => __('pages/home.enter_title'),
+  ];
+@endphp
