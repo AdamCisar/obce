@@ -1,0 +1,14 @@
+.city-details {
+    &__info {
+        background-color: map-get($city-detail-colors, background);
+        padding: 5rem;
+    }
+
+    &__wrapper {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &__city-name {
+        color: map-get($city-detail-colors, city-name);
+    }
+}
