@@ -17,6 +17,7 @@ export default defineConfig({
         'resources/js/app.js',
         'resources/js/cities/autocomplete.js',
         'resources/sass/pages/home.scss',
+        'resources/sass/pages/city_detail.scss',
       ],
       refresh: true,
     }),
