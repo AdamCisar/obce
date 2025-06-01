@@ -7,6 +7,7 @@ const Autocomplete = {
     const debounced = this.debouncePromise((items) => Promise.resolve(items), 300);
     autocomplete({
       container: '#autocomplete',
+      placeholder: Translations.enter_title,
       detachedMediaQuery: 'none',
       stallThreshold: 500,
       getSources({ query }) {
