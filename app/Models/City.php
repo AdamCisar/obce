@@ -11,6 +11,7 @@ class City extends Model
         'city_hall_address',
         'coat_of_arms_url',
         'phone',
+        'fax',
         'email',
         'web_address',
         'mayor_name',
